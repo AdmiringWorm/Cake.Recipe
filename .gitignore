@@ -259,11 +259,10 @@ tests/integration/repos/
 Cake.Recipe/Content/version.cake
 includes.cake
 
+# Cake.Graph related
+docs/input/tasks/*
+
 # Wyam related
 docs/config.wyam.dll
 docs/config.wyam.hash
 docs/config.wyam.packages.xml
-
-*.orig
-
-.DS_Store

@@ -195,9 +195,6 @@ BuildParameters.Tasks.BuildTask = Task("Build")
             }
 
             MSBuild(BuildParameters.SolutionFilePath, msbuildSettings);
-
-            // Pass path to MsBuild log file to Cake.Issues.Recipe
-            IssuesParameters.InputFiles.MsBuildBinaryLogFilePath = BuildParameters.Paths.Files.BuildBinLogFilePath;
         }
         else
         {
@@ -237,9 +234,6 @@ BuildParameters.Tasks.DotNetCoreBuildTask = Task("DotNetCore-Build")
             MSBuildSettings = msBuildSettings,
             NoRestore = true
         });
-
-        // We set this here, so we won't have a failure in case this task is never called
-        IssuesParameters.InputFiles.MsBuildBinaryLogFilePath = BuildParameters.Paths.Files.BuildBinLogFilePath;
 
         CopyBuildOutput(buildVersion);
     });
@@ -385,9 +379,7 @@ BuildParameters.Tasks.PackageTask = Task("Package")
     .IsDependentOn("Export-Release-Notes");
 
 BuildParameters.Tasks.DefaultTask = Task("Default")
-    .IsDependentOn("Package")
-    // Run issues task from Cake.Issues.Recipe by default.
-    .IsDependentOn("Issues");
+    .IsDependentOn("Package");
 
 BuildParameters.Tasks.UploadArtifactsTask = Task("Upload-Artifacts")
     .IsDependentOn("Package")
@@ -414,7 +406,6 @@ BuildParameters.Tasks.UploadArtifactsTask = Task("Upload-Artifacts")
 BuildParameters.Tasks.ContinuousIntegrationTask = Task("CI")
     // Run issues task from Cake.Issues.Recipe by default.
     .IsDependentOn("Upload-Artifacts")
-    .IsDependentOn("Issues")
     .IsDependentOn("Publish-PreRelease-Packages")
     .IsDependentOn("Publish-Release-Packages")
     .IsDependentOn("Publish-GitHub-Release")
@@ -503,7 +494,6 @@ public class Builder
         BuildParameters.Tasks.CreateChocolateyPackagesTask.IsDependentOn(prefix + "Build");
         BuildParameters.Tasks.TestTask.IsDependentOn(prefix + "Build");
         BuildParameters.Tasks.DupFinderTask.IsDependentOn(prefix + "Build");
-        BuildParameters.Tasks.InspectCodeTask.IsDependentOn(prefix + "Build");
         BuildParameters.Tasks.PackageTask.IsDependentOn("Analyze");
         BuildParameters.Tasks.PackageTask.IsDependentOn("Test");
         BuildParameters.Tasks.PackageTask.IsDependentOn("Create-NuGet-Packages");
