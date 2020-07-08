@@ -1,3 +1,10 @@
+environment:
+  MYGET_SOURCE: https://f.feedz.io/wormiecorp/packages/nuget/index.json
+  MYGET_API_KEY:
+    secure: +//ZAuC+2IsLk2CHali4lbDZNflzGdKmnQCJvb/5CrVRQJukll6fF872zsnSDB0n
+  APPVEYOR_API_TOKEN:
+    secure: QHpexV7pcFPNcXT0clrRuSDwDXXXI6oxFwBw5NDIRRg=
+
 #---------------------------------#
 #  Build Script                   #
 #---------------------------------#
@@ -13,13 +20,10 @@ test: off
 branches:
   # Whitelist
   only:
-    - develop
-    - master
-    - /release/.*/
-    - /hotfix/.*/
+    - custom2
 
 #---------------------------------#
 #  Build Cache                    #
 #---------------------------------#
 cache:
-- 'tools -> build.ps1, tools/packages.config, Cake.Recipe/Content/addins.cake, Cake.Recipe/Content/tools.cake'
+  - "tools -> build.config,Cake.Recipe/Content/addins.cake,Cake.Recipe/Content/tools.cake"

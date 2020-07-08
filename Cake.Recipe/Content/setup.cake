@@ -45,11 +45,6 @@ Setup<BuildData>(context =>
         context.Log.Verbosity = Verbosity.Diagnostic;
     }
 
-    // Make sure build and linters run before issues task.
-    IssuesBuildTasks.ReadIssuesTask
-        .IsDependentOn("Build")
-        .IsDependentOn("InspectCode");
-
     return new BuildData(context);
 });
 

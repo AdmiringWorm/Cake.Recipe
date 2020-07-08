@@ -13,9 +13,10 @@ BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./src",
                             title: "Cake.Recipe",
-                            repositoryOwner: "cake-contrib",
+                            repositoryOwner: "AdmiringWorm",
                             repositoryName: "Cake.Recipe",
-                            appVeyorAccountName: "cakecontrib");
+                            appVeyorAccountName: "AdmiringWorm",
+                            shouldRunInspectCode: false);
 
 BuildParameters.PrintParameters(Context);
 
