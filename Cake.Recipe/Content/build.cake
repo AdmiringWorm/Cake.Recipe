@@ -182,11 +182,6 @@ BuildParameters.Tasks.BuildTask = Task("Build")
                 .SetMaxCpuCount(ToolSettings.MaxCpuCount)
                 .SetConfiguration(BuildParameters.Configuration);
 
-            msbuildSettings.ArgumentCustomization = args =>
-                args.Append(string.Format("/logger:BinaryLogger,\"{0}\";\"{1}\"",
-                    context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll"),
-                    BuildParameters.Paths.Files.BuildBinLogFilePath));
-
             // This is used in combination with SourceLink to ensure a deterministic
             // package is generated
             if(BuildParameters.ShouldUseDeterministicBuilds)
@@ -224,9 +219,6 @@ BuildParameters.Tasks.DotNetCoreBuildTask = Task("DotNetCore-Build")
             string value = string.Join(" ", kv.Value);
             msBuildSettings.WithProperty(kv.Key, value);
         }
-        msBuildSettings.WithLogger("BinaryLogger," + context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll"),
-            "",
-            BuildParameters.Paths.Files.BuildBinLogFilePath.ToString());
 
         DotNetCoreBuild(BuildParameters.SolutionFilePath.FullPath, new DotNetCoreBuildSettings
         {
