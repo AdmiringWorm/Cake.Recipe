@@ -93,7 +93,7 @@ else
         find . -type d ! -name . ! -name 'Cake.Bakery' | xargs rm -rf
     fi
 
-    . $MONO_EXE "$NUGET_EXE" install -ExcludeVersion
+    $MONO_EXE "$NUGET_EXE" install -ExcludeVersion
     if [ $? -ne 0 ]; then
         echo "Could not restore NuGet tools."
         exit 1
@@ -107,7 +107,7 @@ else
     if [ -f "$ADDINS_PACKAGES_CONFIG" ]; then
         pushd "$ADDINS_DIR" >/dev/null
 
-        . $MONO_EXE "$NUGET_EXE" install -ExcludeVersion
+        $MONO_EXE "$NUGET_EXE" install -ExcludeVersion
         if [ $? -ne 0 ]; then
             echo "Could not restore NuGet addins."
             exit 1
@@ -120,7 +120,7 @@ else
     if [ -f "$MODULES_PACKAGES_CONFIG" ]; then
         pushd "$MODULES_DIR" >/dev/null
 
-        . $MONO_EXE "$NUGET_EXE" install -ExcludeVersion
+        $MONO_EXE "$NUGET_EXE" install -ExcludeVersion
         if [ $? -ne 0 ]; then
             echo "Could not restore NuGet modules."
             exit 1
